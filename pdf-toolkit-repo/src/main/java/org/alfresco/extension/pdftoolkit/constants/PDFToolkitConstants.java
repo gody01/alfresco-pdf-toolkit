@@ -7,7 +7,7 @@ public abstract class PDFToolkitConstants
     public static final String PARAM_INPLACE    	 				= "inplace";
     public static final String PARAM_DESTINATION_FOLDER 			= "destination-folder";
     public static final String PARAM_DESTINATION_NAME  				= "destination-name";
-    public static final String PARAM_CREATE_NEW						= "create-new";
+//    public static final String PARAM_CREATE_NEW						= "create-new";
     public static final String PARAM_POSITION       				= "position";
     public static final String PARAM_LOCATION_X     				= "location-x";
     public static final String PARAM_LOCATION_Y     				= "location-y";

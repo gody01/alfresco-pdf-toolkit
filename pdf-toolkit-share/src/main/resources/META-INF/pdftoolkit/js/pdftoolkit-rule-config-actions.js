@@ -93,9 +93,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 						_destinationParam: "target-node"
 					},
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -120,9 +120,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 					// add custom renderers for hidden fields
 					configDef.parameterDefinitions.splice(0,0,
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -155,9 +155,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 						_destinationParam: "private-key"
 					},
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -182,9 +182,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 					// add custom renderers for hidden fields
 					configDef.parameterDefinitions.splice(0,0,
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -218,9 +218,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 						_destinationParam: "insert-content"
 					},
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -253,9 +253,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 						_destinationParam: "watermark-image"
 					},
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -280,9 +280,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 					// add custom renderers for hidden fields
 					configDef.parameterDefinitions.splice(0,0,
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -387,9 +387,9 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 					// add custom renderers for hidden fields
 					configDef.parameterDefinitions.splice(0,0,
 					{
-						type: "pdftoolkit:destination-dialog-button",
-						displayLabel: this.msg("pdftoolkit.destination-folder"),
-						_buttonLabel: this.msg("pdftoolkit.select-folder"),
+						type: "arca:destination-dialog-button",
+						displayLabel: this.msg("label.to"),
+						_buttonLabel: this.msg("button.select-folder"),
 						_destinationParam: "destination-folder"
 					});
 
@@ -501,71 +501,7 @@ if(typeof PDFToolkit == "undefined" || !PDFToolkit)
 						this.widgets.selectedFileDialog.onShowPicker();
 					});
 				}
-			},
-			
-			"pdftoolkit:destination-dialog-button":
-			{
-				manual: { edit: true },
-				currentCtx: {},
-				
-				edit: function (containerEl, configDef, paramDef, ruleConfig, value)
-				{
-					this._createLabel(paramDef.displayLabel, containerEl); 
-					var nodeRef = ruleConfig.parameterValues ? ruleConfig.parameterValues[paramDef._destinationParam] : null;
-					this._createPathSpan(containerEl, configDef, paramDef, this.id + "-" + configDef._id + "-destinationLabel", nodeRef);
-					this._createButton(containerEl, configDef, paramDef, ruleConfig, function RCA_destinationDialogButton_onClick(type, obj)
-					{
-						this.renderers["pdftoolkit:destination-dialog-button"].currentCtx =
-						{
-								configDef: obj.configDef,
-								ruleConfig: obj.ruleConfig,
-								paramDef: obj.paramDef
-						};
-						if (!this.widgets.pdfDestinationDialog)
-						{
-							this.widgets.pdfDestinationDialog = new Alfresco.module.DoclibGlobalFolder(this.id + "-destinationDialog");
-							this.widgets.pdfDestinationDialog.setOptions(
-							{
-								title: this.msg("dialog.destination.title")
-							});
-
-							YAHOO.Bubbling.on("folderSelected", function (layer, args)
-							{
-								if ($hasEventInterest(this.widgets.pdfDestinationDialog, args))
-								{
-									var selectedFolder = args[1].selectedFolder;
-									if (selectedFolder !== null)
-									{
-										var ctx = this.renderers["pdftoolkit:destination-dialog-button"].currentCtx;
-										this._setHiddenParameter(ctx.configDef, ctx.ruleConfig, ctx.paramDef._destinationParam, selectedFolder.nodeRef);
-										Alfresco.util.ComponentManager.get(this.id + "-" + ctx.configDef._id + "-destinationLabel").displayByPath(selectedFolder.path, selectedFolder.siteId, selectedFolder.siteTitle);
-										this._updateSubmitElements(ctx.configDef);
-									}
-								}
-							}, this);
-						}
-						var pathNodeRef = this._getParameters(obj.configDef)["destination-folder"],
-						allowedViewModes =
-						[
-							Alfresco.module.DoclibGlobalFolder.VIEW_MODE_SITE
-						];
-
-						if (this.options.repositoryBrowsing === true)
-						{
-							allowedViewModes.push(Alfresco.module.DoclibGlobalFolder.VIEW_MODE_REPOSITORY, Alfresco.module.DoclibGlobalFolder.VIEW_MODE_USERHOME);
-						}
-						
-						this.widgets.pdfDestinationDialog.setOptions(
-						{
-							allowedViewModes: allowedViewModes,
-							nodeRef: this.options.rootNode,
-							pathNodeRef: pathNodeRef ? new Alfresco.util.NodeRef(pathNodeRef) : null
-						});
-						
-						this.widgets.pdfDestinationDialog.showDialog();
-					});
-				}
-			}
+			}	
 		}
 	});
 })();
